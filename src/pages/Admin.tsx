@@ -1,3 +1,30 @@
+import { Container, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
+import { TabButton } from "../features/home";
+
 export default function Admin() {
-    return (<>ADMIN PAGE</>)
+    return (
+        <Container>
+            <Grid
+                container
+                spacing={4}
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Grid item>
+                    <Link to="/employees">
+                        <TabButton variant="contained" size="large">Employees</TabButton>
+                    </Link>
+                </Grid>
+                <Grid item>
+                    <TabButton variant="contained" size="large">Leaves</TabButton>
+                </Grid>
+                <Grid item>
+                    <Link to="/addNewEmployee">
+                        <TabButton variant="contained" size="large">New Employee</TabButton>
+                    </Link>
+                </Grid>
+            </Grid>
+        </Container>
+    )
 }

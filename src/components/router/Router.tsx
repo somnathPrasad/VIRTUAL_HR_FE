@@ -2,8 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import PersistLogin from "../../layouts/PersistLogin";
 import Admin from "../../pages/Admin";
+import Employees from "../../pages/Employees";
 import Home from "../../pages/Home";
 import Login from "../../pages/Login";
+import NewEmployee from "../../pages/NewEmployee";
 import RequireAuth from "../auth/RequireAuth";
 import Unauthorized from "../unauthorized/unauthorized";
 
@@ -28,11 +30,17 @@ export default function Router() {
                     <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
                         <Route path="/" element={<Home />} />
                     </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                        <Route path="admin" element={<Admin />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                        <Route path="employees" element={<Employees />} />
+                    </Route>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                        <Route path="addNewEmployee" element={<NewEmployee />} />
+                    </Route>
                 </Route>
 
-                <Route element={<RequireAuth allowedRoles={[5150]} />}>
-                    <Route path="admin" element={<Admin />} />
-                </Route>
 
 
                 {/* CATCH ALL */}

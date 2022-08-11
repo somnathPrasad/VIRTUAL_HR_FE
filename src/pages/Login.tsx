@@ -1,17 +1,18 @@
+import { Button, Grid, Typography } from "@mui/material";
+import { useTheme } from "@mui/system";
 import { useFormik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import * as Yup from 'yup';
+import LoginCard from "../components/stylesComponents/LoginCard";
+import TextInput from "../components/stylesComponents/TextInput";
 import useLoginUser from "../features/login/api/useLoginUser";
 import useAuth from "../hooks/useAuth"
+import CircularProgress from '@mui/material/CircularProgress';
+import useSnackbar from "../hooks/useSnackbar";
 
 interface LoginFormValues {
     userId: string,
     password: string
-}
-
-interface locationInterface {
-    from: { pathname: string }
 }
 
 export default function Login() {
@@ -20,8 +21,9 @@ export default function Login() {
     const location: any = useLocation();
     const from = location.state?.from?.pathname || "/";
     const initialValues: LoginFormValues = { userId: "", password: "" }
+    const { setSnackMessage, setSnackType } = useSnackbar()
 
-    const { mutateAsync: loginUser } = useLoginUser();
+    const { mutateAsync: loginUser, isLoading } = useLoginUser();
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: Yup.object({
@@ -35,56 +37,69 @@ export default function Login() {
         onSubmit: values => {
             loginUser({ userId: values.userId, password: values.password }, {
                 onSuccess: (data) => {
+                    setSnackMessage("Login Successful");
+                    setSnackType("success")
                     setAuth({ userId: values.userId, password: values.password, accessToken: data.accessToken, roles: data.roles });
                     navigate(from, { replace: true })
-                    if (data.status) {
-                        toast.success(data.message)
-                    }
-                    if (!data.status) {
-                        toast.error(data.message)
-                    }
                 },
-                onError: (error: any, variables, context) => {
-                    toast.error(error.message)
+                onError: (error: any) => {
+                    console.log(error)
+                    setSnackMessage("Login Failed. Check user id and password and try again.");
+                    setSnackType("warning")
                 },
             })
         }
     })
-
+    const theme = useTheme()
     return (
-        <div>
-            <form onSubmit={formik.handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-gradient-to-r from-yellow-100 to-yellow-600">
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">User Id</label>
-                    <input
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                        id="userId"
-                        name="userId"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.userId}
-                        placeholder="User ID"
-                        onBlur={formik.handleBlur}
-                    />
-                    <p className="text-red-500 text-xs italic">{formik.errors.userId ? formik.errors.userId : ""}</p>
-                </div>
-                <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                        Password
-                    </label>
-                    <input className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="password" type="password" placeholder="******************" name="password" onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur} />
-
-                    <p className="text-red-500 text-xs italic">{formik.errors.password ? formik.errors.password : ""}</p>
-                </div>
-                <div className="flex items-center justify-between">
-                    <button className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`} type="submit">
-                        Login
-                    </button>
-                    <p className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                        Forgot Password?
-                    </p>
-                </div>
+        <LoginCard>
+            <Typography variant="h5" color="initial" align="center" sx={{ pb: 3, fontWeight: 600, color: theme.palette.primary.dark }}>Welcome</Typography>
+            <form onSubmit={formik.handleSubmit}>
+                <Grid container direction={"column"} spacing={2} >
+                    <Grid item>
+                        <TextInput
+                            id="userId"
+                            label="User Id"
+                            variant="filled"
+                            name="userId"
+                            placeholder="Enter your 10 digit PAN number"
+                            fullWidth
+                            value={formik.values.userId}
+                            onChange={formik.handleChange}
+                            error={formik.touched.userId && Boolean(formik.errors.userId)}
+                            helperText={formik.touched.userId && formik.errors.userId}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextInput
+                            fullWidth
+                            id="password"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            variant="filled"
+                            placeholder="******************"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            error={formik.touched.password && Boolean(formik.errors.password)}
+                            helperText={formik.touched.password && formik.errors.password}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            type="submit"
+                            sx={{ backgroundColor: "#3b82f6" }}
+                            variant="contained"
+                            fullWidth
+                            size="large" >
+                            {isLoading ? <CircularProgress sx={{ color: 'white' }} size={30} /> : "Login"}
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Typography color={theme.palette.primary.dark} align="center">Forgot Password?</Typography>
+                    </Grid>
+                </Grid>
             </form>
-        </div>
+        </LoginCard>
     )
 }
