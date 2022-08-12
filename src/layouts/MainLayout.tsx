@@ -19,7 +19,7 @@ export default function MainLayout() {
     return (
         <ThemeProvider theme={theme}>
             <NotificationProvider>
-                <div className="bg-gradient-to-br from-[#f0fcfa] to-[#c8faf2] min-h-screen flex items-center justify-center">
+                <div className="bg-gradient-to-br from-[#f0fcfa] to-[#c8faf2] min-h-screen flex justify-center">
                     <Navbar />
                     <Outlet />
                 </div>

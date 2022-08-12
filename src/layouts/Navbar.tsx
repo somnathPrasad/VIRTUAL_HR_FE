@@ -3,7 +3,7 @@ import icon from "../icon.svg"
 import logoPng from "../logo.png"
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import { Avatar, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 export default function Navbar() {
 

@@ -30,13 +30,13 @@ export default function Router() {
                     <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
                         <Route path="/" element={<Home />} />
                     </Route>
-                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
                         <Route path="admin" element={<Admin />} />
                     </Route>
-                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
                         <Route path="employees" element={<Employees />} />
                     </Route>
-                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
+                    <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
                         <Route path="addNewEmployee" element={<NewEmployee />} />
                     </Route>
                 </Route>

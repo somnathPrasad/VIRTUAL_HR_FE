@@ -1,10 +1,11 @@
-import { Container, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
+import PageContainer from "../components/stylesComponents/PageContainer";
 import { TabButton } from "../features/home";
 
 export default function Admin() {
     return (
-        <Container>
+        <PageContainer sx={{display:"flex", alignItems:"center"}}>
             <Grid
                 container
                 spacing={4}
@@ -25,6 +26,6 @@ export default function Admin() {
                     </Link>
                 </Grid>
             </Grid>
-        </Container>
+        </PageContainer>
     )
 }

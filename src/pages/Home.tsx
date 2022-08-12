@@ -1,8 +1,9 @@
 // import useRefreshToken from "../hooks/useRefreshToken"
-import { Container, Grid } from "@mui/material"
+import { Grid } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import { TabButton } from "../features/home";
+import PageContainer from "../components/stylesComponents/PageContainer";
 
 export default function Home() {
     // const refresh = useRefreshToken();
@@ -14,7 +15,7 @@ export default function Home() {
         navigate("/")
     }
     return (
-        <Container>
+        <PageContainer sx={{display:"flex", alignItems:"center"}}>
             <Grid
                 container
                 spacing={4}
@@ -36,6 +37,6 @@ export default function Home() {
                     <TabButton onClick={signOut} variant="contained" size="large">Log out</TabButton>
                 </Grid>
             </Grid>
-        </Container>
+        </PageContainer>
     )
 }

@@ -2,7 +2,9 @@ import React, { createContext, useState } from "react";
 
 interface authInterface {
   userId?: string,
-  password?: string,
+  firstName?: string,
+  lastName?: string,
+  companyId: string,
   accessToken?: string,
   roles: Number[]
 }
@@ -12,10 +14,10 @@ interface AuthContextInterface {
   setAuth: React.Dispatch<React.SetStateAction<authInterface>>
 }
 
-const AuthContext = createContext<AuthContextInterface>({ auth: { roles: [] }, setAuth: () => { } });
+const AuthContext = createContext<AuthContextInterface>({ auth: { roles: [], companyId: "" }, setAuth: () => { } });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [auth, setAuth] = useState<authInterface>({ roles: [] });
+  const [auth, setAuth] = useState<authInterface>({ roles: [], companyId: "" });
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}

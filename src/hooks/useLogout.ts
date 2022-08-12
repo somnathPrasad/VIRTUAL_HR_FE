@@ -5,7 +5,7 @@ export default function useLogout() {
   const { setAuth } = useAuth();
 
   const logout = async () => {
-    setAuth({ roles: [] });
+    setAuth({ roles: [], companyId: "" });
     try {
       await Axios("/logout", { withCredentials: true });
     } catch (error) {
