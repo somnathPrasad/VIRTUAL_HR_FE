@@ -1,8 +1,7 @@
 // import useRefreshToken from "../hooks/useRefreshToken"
-import { Grid } from "@mui/material"
+import { Button, Grid } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
-import { TabButton } from "../features/home";
 import PageContainer from "../components/stylesComponents/PageContainer";
 
 export default function Home() {
@@ -23,18 +22,18 @@ export default function Home() {
                 justifyContent="center"
             >
                 <Grid item>
-                    <TabButton variant="contained" size="large">My Profile</TabButton>
+                    <Button variant="contained" size="large">My Profile</Button>
                 </Grid>
                 <Grid item>
-                    <TabButton variant="contained" size="large">Department Panel</TabButton>
+                    <Button variant="contained" size="large">Department Panel</Button>
                 </Grid>
                 <Grid item>
                     <Link to={"/admin"}>
-                        <TabButton variant="contained" size="large">Admin Panel</TabButton>
+                        <Button variant="contained" size="large">Admin Panel</Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <TabButton onClick={signOut} variant="contained" size="large">Log out</TabButton>
+                    <Button onClick={signOut} variant="contained" size="large">Log out</Button>
                 </Grid>
             </Grid>
         </PageContainer>

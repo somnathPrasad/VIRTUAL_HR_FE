@@ -1,7 +1,6 @@
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import PageContainer from "../components/stylesComponents/PageContainer";
-import { TabButton } from "../features/home";
 
 export default function Admin() {
     return (
@@ -14,15 +13,15 @@ export default function Admin() {
             >
                 <Grid item>
                     <Link to="/employees">
-                        <TabButton variant="contained" size="large">Employees</TabButton>
+                        <Button variant="contained" size="large">Employees</Button>
                     </Link>
                 </Grid>
                 <Grid item>
-                    <TabButton variant="contained" size="large">Leaves</TabButton>
+                    <Button variant="contained" size="large">Leaves</Button>
                 </Grid>
                 <Grid item>
                     <Link to="/addNewEmployee">
-                        <TabButton variant="contained" size="large">New Employee</TabButton>
+                        <Button variant="contained" size="large">New Employee</Button>
                     </Link>
                 </Grid>
             </Grid>

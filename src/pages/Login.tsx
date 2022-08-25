@@ -1,10 +1,9 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, TextField } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { useFormik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import LoginCard from "../components/stylesComponents/LoginCard";
-import TextInput from "../components/stylesComponents/TextInput";
 import useLoginUser from "../features/login/api/useLoginUser";
 import useAuth from "../hooks/useAuth"
 import CircularProgress from '@mui/material/CircularProgress';
@@ -59,7 +58,7 @@ export default function Login() {
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container direction={"column"} spacing={2} >
                         <Grid item>
-                            <TextInput
+                            <TextField
                                 id="userId"
                                 label="User Id"
                                 variant="filled"
@@ -73,7 +72,7 @@ export default function Login() {
                             />
                         </Grid>
                         <Grid item>
-                            <TextInput
+                            <TextField
                                 fullWidth
                                 id="password"
                                 name="password"
@@ -90,7 +89,7 @@ export default function Login() {
                         <Grid item>
                             <Button
                                 type="submit"
-                                sx={{ backgroundColor: "#3b82f6" }}
+                                color="secondary"
                                 variant="contained"
                                 fullWidth
                                 size="large" >
