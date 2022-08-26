@@ -5,12 +5,10 @@ import useRefreshToken from "./useRefreshToken";
 
 
 export default function useAxiosPrivate() {
-
   const refresh = useRefreshToken();
   const { auth } = useAuth();
 
   useEffect(() => {
-
     // When we are making a request
     const requestInterceptor = AxiosPrivate.interceptors.request.use(
       (config: any) => {
@@ -19,7 +17,8 @@ export default function useAxiosPrivate() {
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
         }
         return config;
-      }, (error) => Promise.reject(error)
+      },
+      (error) => Promise.reject(error)
     );
 
     // When we receive a response
@@ -33,7 +32,7 @@ export default function useAxiosPrivate() {
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return AxiosPrivate(prevRequest);
         }
-        return Promise.reject(error)
+        return Promise.reject(error);
       }
     );
     return () => {

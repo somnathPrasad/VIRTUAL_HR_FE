@@ -4,7 +4,6 @@ import colors from "./colors";
 import filledInput from "./filledInput";
 import customPalette from "./palette";
 
-
 const theme = createTheme({
   components: {
     MuiButtonBase: {
@@ -175,6 +174,20 @@ const theme = createTheme({
         },
       },
     },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#d4ede8",
+          lineHeight: "1.5rem",
+          fontSize: "0.875rem",
+          fontWeight: "600",
+          padding: "16px",
+          borderBottom: "none",
+          color: "rgb(99, 115, 129)",
+          borderRadius:"5px"
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         root: {
@@ -182,13 +195,29 @@ const theme = createTheme({
           borderColor: "#E7EBF0",
         },
         head: {
-          color: "#1A2027",
-          fontWeight: 700,
+          // color: "rgb(99, 115, 129)",
+          // fontWeight: 600,
+          padding: "16px",
+          // fontSize: "0.875rem",
+          // lineHeight: "1.5rem",
+          borderBottom: "none",
+          // backgroundColor: "#f4f6f8",
         },
         body: {
           color: "#3E5060",
+          borderBottom: 'none',
         },
       },
+    },
+    MuiTableRow:{
+      styleOverrides:{
+        hover:{
+          backgroundColor:"#f4f6f8"
+        },
+        head:{
+          borderRadius:"10px"
+        }
+      }
     },
     MuiToggleButtonGroup: {
       styleOverrides: {

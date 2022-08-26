@@ -1,66 +1,51 @@
-import { Box, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { Container } from "@mui/system";
+import { IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React from "react";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PageContainer from "../components/stylesComponents/PageContainer";
-import { StyledTableCell } from "../components/stylesComponents/Table";
+import useGetAllEmployees from "../features/employee/api/getAllEmployees";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-    price: number,
-) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
-        history: [
-            {
-                date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
-            },
-            {
-                date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
-            },
-        ],
-    };
+interface Employee {
+    firstName: string,
+    lastName: string,
+    companyId: string,
+    aadharNumber?: string,
+    panNumber?: string,
+    mobileNumber?: string,
+    userId: string,
+    roles: object,
+    _id: string,
+    address?: string
 }
 
-function Row(props: { row: ReturnType<typeof createData> }) {
+function Row(props: { row: Employee }) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
 
     return (
         <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }} hover>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
                         size="small"
                         onClick={() => setOpen(!open)}
+                        disabled
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.name}
+                    {row.firstName}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="center">{row.lastName}</TableCell>
+                <TableCell align="center">{row.aadharNumber}</TableCell>
+                <TableCell align="center">{row.panNumber}</TableCell>
+                <TableCell align="center">{row.mobileNumber}</TableCell>
+                <TableCell align="center">{row.address}</TableCell>
             </TableRow>
-            <TableRow>
+            {/* <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
@@ -94,48 +79,37 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                         </Box>
                     </Collapse>
                 </TableCell>
-            </TableRow>
+            </TableRow> */}
         </React.Fragment>
     );
 }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
-
 export default function Employees() {
+
+    const axiosPrivate = useAxiosPrivate();
+
+    const { data, isLoading } = useGetAllEmployees(axiosPrivate);
+
     return (
         <PageContainer>
-            {/* <Grid
-                container
-                spacing={4}
-                alignItems="center"
-                justifyContent="center"
-            > */}
-                <TableContainer component={Paper}>
-                    <Table aria-label="collapsible table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell />
-                                <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                                <StyledTableCell align="right">Calories</StyledTableCell>
-                                <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                                <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                                <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <Row key={row.name} row={row} />
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            {/* </Grid> */}
+            <Table aria-label="collapsible table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell />
+                        <TableCell>First Name</TableCell>
+                        <TableCell align="center">Last Name</TableCell>
+                        <TableCell align="center">Aadhar Number</TableCell>
+                        <TableCell align="center">Pan Number</TableCell>
+                        <TableCell align="center">Mobile Number</TableCell>
+                        <TableCell align="center">Address</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {!isLoading && data.map((row: Employee) => (
+                        <Row key={row._id} row={row} />
+                    ))}
+                </TableBody>
+            </Table>
         </PageContainer>
     )
 }
